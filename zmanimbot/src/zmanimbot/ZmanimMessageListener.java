@@ -46,7 +46,7 @@ abstract class ZmanimMessageListener {
     			ZmanimBot.sendMessage(chatter, blocked(param,chatter));
     		}
 
-	    	else if (lowerCase.startsWith("help")) {
+	    	else if (lowerCase.startsWith("help") || lowerCase.startsWith("?")) {
 	    		ZmanimBot.sendMessage(chatter, help(param));
 	    	}
 	    	
@@ -54,11 +54,11 @@ abstract class ZmanimMessageListener {
 	    		ZmanimBot.sendMessage(chatter, list(param));
 	    	}
 	    	
-	    	else if (lowerCase.startsWith("credits")) {
+	    	else if (lowerCase.startsWith("credits") || lowerCase.startsWith("about")) {
 	    		ZmanimBot.sendMessage(chatter, credits(param ));
 	    	}
 	    	
-	    	else if(lowerCase.startsWith("comment")){
+	    	else if(lowerCase.startsWith("comment") || lowerCase.startsWith("feedback")){
 	    		ZmanimBot.sendMessage(chatter, comment( param, chatter));
 	    	}
 	    		    	

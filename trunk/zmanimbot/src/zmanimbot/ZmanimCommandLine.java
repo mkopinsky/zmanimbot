@@ -1,22 +1,11 @@
-/**
- * The contents of this file are subject to the OpenMRS Public License
- * Version 1.0 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://license.openmrs.org
- *
- * Software distributed under the License is distributed on an "AS IS"
- * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- * License for the specific language governing rights and limitations
- * under the License.
- *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
- */
 package zmanimbot;
 
 import java.io.*;
 
 /**
- *
+ * Command line application that parses user input according to normal methods, but
+ * outputs the response to stdout instead of to a user over a protocol. This allows
+ * easy interfacing with CGI (for setting up SMS) or another gateway such as email.
  */
 public class ZmanimCommandLine extends ZmanimMessageListener {
 	
@@ -25,14 +14,18 @@ public class ZmanimCommandLine extends ZmanimMessageListener {
 		parser = new ZmanimParser();
         System.out.println(parse(s,"Command Line"));
 	}
+	
 	/**
-	 * Auto generated method comment
-	 * 
-	 * @param args
+	 * Normally, log messages can go to stdout, since the output of parse is being sent 
+	 * elsewhere, but here, where the main output is to stdout, we need to repress these
+	 * messages.
+	 *  
+	 * @see zmanimbot.ZmanimMessageListener#log(java.lang.String)
 	 */
 	protected void log(String s) {
-		; //Do nothing, because we don't want log message going into the output
+		;
 	}
+	
 	public static void main(String[] args) {
 		String str="";
 		for (String s:args)

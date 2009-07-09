@@ -63,6 +63,7 @@ public class ZmanimBot {
         readLocationsFile("resources/IL1.txt");
         m_bots = InitializeBots("passwords.txt");
 
+
     }
     
     /** HashMap<String,Bot> InitializeBots(String filename)
@@ -345,6 +346,13 @@ public class ZmanimBot {
      */
     public static void clearCache() {
     	locationTable.clear();
+    }
+    
+    public static void cycleXMPPs(long wait) {
+    	for (Bot b : m_bots.values())
+    		if (b instanceof XMPPBot)
+    			((XMPPBot)b).cycleConnection(wait);
+    	
     }
     
     

@@ -2,7 +2,9 @@ package zmanimbot;
 
 import zmanimbot.*;
 import org.jivesoftware.smack.*;
+import org.jivesoftware.smack.filter.PacketFilter;
 import org.jivesoftware.smack.packet.*;
+
 import java.util.*;
 
 
@@ -13,52 +15,38 @@ import java.util.*;
 class XMPPBot extends Bot {
 	/* Inherited fields:
 	 * @ String[] admins
-	 * @ String suffix
 	 */
 	
 	
 	XMPPConnection connection;
     Presence presence;
     XMPPMessageListener ml;
+    String server;
+    String username;
+    String password;
 	
 	
 	/**
-	 * Constructor XMPPBot
+	 * Constructor XMPPBot()
 	 * 
 	 * Creates the bot, connects to the server, sets presence aka status message, 
 	 * creates a chatListener. Everything is handled by the chatListener and the rest of the 
 	 * Smack API.
 	 *
 	 */
-	public XMPPBot(String server, String username, String password) {
+	public XMPPBot(String p_server, String p_username, String p_password) {
+		server=p_server;
+		username=p_username;
+		password=p_password;
 		try {
 			ml = new XMPPMessageListener();
 			
-			connection = new XMPPConnection(server);
-			
-			System.out.println(new Date() + "\tLogging in to "+server);
-			System.out.print("Connected? "+connection.isConnected());
-			System.out.println(" Authenticated? "+connection.isAuthenticated());
-			connection.connect();
-			System.out.print("Connected? "+connection.isConnected());
-			System.out.println(" Authenticated? "+connection.isAuthenticated());
-			connection.login(username,password);
-			System.out.print("Connected? "+connection.isConnected());
-			System.out.println(" Authenticated? "+connection.isAuthenticated());
-			System.out.println(connection.getRoster().getEntries());
-	
 	        //Set presence
 	        presence = new Presence(Presence.Type.available, "Check out zmanimbot.blogspot.com. And tell your friends about ZmanimBot!",0,Presence.Mode.available);
-	        Timer presenceTimer = new Timer();
-	        presenceTimer.scheduleAtFixedRate(new TimerTask() { public void run() { connection.sendPacket(presence);}} 	, 0, 10*60*1000);
-	        
-	        //Create chatListener, and attach it to connection
-	        connection.getChatManager().addChatListener(new ChatManagerListener() {
-	        	public void chatCreated(Chat chat, boolean createdLocally) {
-	        		chat.addMessageListener(ml);
-	        	}
-	        	
-	        });
+
+	        connectToServer();
+
+	        new Timer().scheduleAtFixedRate(new TimerTask() { public void run() { connection.sendPacket(presence);}} 	, 0, 10*60*1000);
 	        
 		} catch (Exception ex) {
 			System.out.println(new Date() + "\tCaught in XMPPBot():");
@@ -66,6 +54,68 @@ class XMPPBot extends Bot {
 		}
 	
 	}	
+	
+	/**
+	 * connectToServer()
+	 * 
+	 * Creates new XMPPConnection, connects to server, logs in, adds message listener
+	 * to handle regular commands, and adds a packet listener to listener for errors
+	 * and print them to stdout. 
+	 * 
+	 * 
+	 * @throws XMPPException
+	 */
+	public void connectToServer() throws XMPPException {
+		System.out.println(new Date() + "\tLogging in to "+server);
+		connection=new XMPPConnection(server);
+
+		connection.connect();
+		connection.login(username, password);
+        connection.getChatManager().addChatListener(new ChatManagerListener() {
+        	public void chatCreated(Chat chat, boolean createdLocally) {
+        		chat.addMessageListener(ml);
+        	}
+        });
+		connection.addPacketListener(new PacketListener() {
+			@Override
+            public void processPacket(Packet p) {
+				System.out.println(((Message)p).toXML());
+            }
+		}, new PacketFilter() {
+			@Override
+            public boolean accept(Packet p) {
+				return p instanceof Message && ((Message)p).getType()==Message.Type.error;
+            }
+		});
+		connection.sendPacket(presence);
+		
+	}
+	
+
+	/**
+	 * Disconnect and reconnect to network with no wait
+	 */
+	public void cycleConnection() {
+		cycleConnection(0);
+	}
+	
+	/**
+	 * Disconnect and reconnect to network, with specified wait interval.
+	 *
+	 */
+	public void cycleConnection(long wait) {
+		System.out.println("Cycling connection: "+connection.getHost() + " with wait of " + wait + " seconds.");
+		connection.disconnect();
+		new Timer().schedule(new TimerTask() {
+            public void run() {
+				try {
+					connectToServer();
+				} catch (XMPPException ex) {
+					ex.printStackTrace();
+				}
+            }
+		}, wait*1000);
+	}
 	
 	
 	/**

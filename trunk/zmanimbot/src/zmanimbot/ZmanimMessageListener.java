@@ -318,6 +318,24 @@ abstract class ZmanimMessageListener {
     				return "Message sent.";
     			} catch (Exception ex) {System.out.println("Trying to send admin message: "+ex);return "Sending failed.";}
     		}
+    		else if (str.startsWith("cycle")) {
+    			String[] spl=str.split(" ");
+    			long wait;
+				if (spl.length>1) {
+					try {
+    					wait = Long.parseLong(spl[1]);
+					} catch (NumberFormatException ex) {
+						wait = 0;
+					}
+				} else {
+					wait = 0;
+				}
+					
+    					
+    					
+    			ZmanimBot.cycleXMPPs(wait);
+    			return "XMPP Bots were cycled.";
+    		}
     		return "Unknown admin command.";
     	}
     }

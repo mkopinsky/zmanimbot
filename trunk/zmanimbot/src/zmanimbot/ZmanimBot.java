@@ -35,6 +35,9 @@ import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.filter.*;
 import org.jivesoftware.smack.packet.*;
 
+import winterwell.jtwitter.Twitter;
+import winterwell.jtwitter.Twitter.Status;
+
 /**
  * Main class that runs the entire ZmanimBot program.
  */
@@ -47,9 +50,8 @@ public class ZmanimBot {
     
 	static Bot gchatbot;
 	static Bot aimbot;
-    
-    
-	private static ZmanimParser parser;
+	static Bot twitterbot;
+    private static ZmanimParser parser;
 	public static ZmanimParser getZmanimParser() { return parser; }
     
 						
@@ -59,10 +61,22 @@ public class ZmanimBot {
         System.out.println(new Date()+"\tStarting ZmanimBot...");
         parser = new ZmanimParser();
         readLocationsFile("resources/IL1.txt");
-        m_bots = new HashMap<String,Bot>();
+        m_bots = InitializeBots("passwords.txt");
+
+    }
+    
+    /** HashMap<String,Bot> InitializeBots(String filename)
+     * Initialize Bots based on the password file.
+     * 
+     * @param filename String filename with all passwords
+     */
+    private static HashMap<String,Bot> InitializeBots(String filename)
+    {
+    	HashMap<String,Bot> bots = new HashMap<String,Bot>();
+    	BufferedReader reader = null;
         try{
         	
-			BufferedReader reader = new BufferedReader(new InputStreamReader (new FileInputStream("passwords.txt")));
+			reader = new BufferedReader(new InputStreamReader (new FileInputStream(filename)));
     		
 			//Read password file and put bots into m_bots map
     		String line;
@@ -76,16 +90,42 @@ public class ZmanimBot {
     				continue;
     			}
     			if (ls[0].equalsIgnoreCase("AIM"))
-    				m_bots.put(ls[1], new AIMBot(ls[2],ls[3]));
+    				bots.put(ls[1], new AIMBot(ls[2],ls[3]));
     			else if (ls[0].equalsIgnoreCase("XMPP"))
-    				m_bots.put(ls[1], new XMPPBot(ls[1],ls[2],ls[3]));
+    				bots.put(ls[1], new XMPPBot(ls[1],ls[2],ls[3]));
+    			else if (ls[0].equalsIgnoreCase("twitter")) //for other non-protocol passwords
+    			{
+    				twitterbot = new TwitterBot(ls[2], ls[3]);	
+    			}
     			else
     				System.out.println("Invalid entry in passwords file. Line was: " + line);
     				
     		}
-    		reader.close();
+    		return bots;
             
-        } catch (Exception ex) {System.out.println(new Date()+"\tCaught in ZmanimBot(): ");ex.printStackTrace();}
+        } 
+        catch (Exception ex) 
+        {
+        	System.out.println(
+        		new Date()+"\tCaught in ZmanimBot(): ");
+        	ex.printStackTrace();
+        }
+        finally 
+        {
+        	if(reader!=null)
+        	{
+				try 
+        		{
+					reader.close();
+				} 
+				catch (IOException e) 
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	}
+		}
+        return null;
     }
 
 
@@ -258,13 +298,15 @@ public class ZmanimBot {
 	 * @param chatter The user to set the message to, including the protocol suffix
 	 * @param message The message to send.
 	 */
-    public static void sendMessage (String chatter, String message) throws Exception {
+    public static void sendMessage (String chatter, String message) throws Exception {    	
     	String suffix = chatter.split("@")[1];
 
     	if (m_bots.containsKey(suffix)) {
     		System.out.println("Sending message with suffix "+suffix);
     		m_bots.get(suffix).send(chatter, message);
     	}
+    	else if(suffix.contains("twitter"))
+	    	twitterbot.send(chatter.substring(1), message);
     	else {
     		m_bots.get("gmail.com").send(chatter, message);
     	}
@@ -278,8 +320,23 @@ public class ZmanimBot {
 	 * @param message The text accompanying the status message. Can be "" if none desired.
 	 */
     public static void setStatus(String status, String message) {
+    	setStatus(status,message,false);
+    }
+    
+    /**
+	 * Set away/available status for all bots.
+	 * 
+	 * @param status String representation of the type of status to set. Currently only 
+	 * 			"Away" and "Available" are supported.
+	 * @param message The text accompanying the status message. Can be "" if none desired.
+	 */
+    public static void setStatus(String status, String message, Boolean updateTwitter) {
+    	//Set status on all bots.
     	for(Bot b : m_bots.values())
     		b.setStatus(status, message);
+    	
+    	if(updateTwitter)
+    		twitterbot.setStatus(status, message);
     }
     
     /**

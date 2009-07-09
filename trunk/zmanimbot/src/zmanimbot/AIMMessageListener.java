@@ -9,7 +9,6 @@ class AIMMessageListener extends ZmanimMessageListener implements AccEvents {
 	
 	AIMMessageListener() {
 		super();
-//		System.out.println(new Date() + "\tCreating new AIMMessageListener");
 	}
 
 	public void OnImReceived(AccSession session, AccImSession imSession, 
@@ -22,7 +21,8 @@ class AIMMessageListener extends ZmanimMessageListener implements AccEvents {
 			else if (chatter.equalsIgnoreCase("AOL System Msg@aim.com"))
 				;
 			else
-				parse(str,chatter);
+				imSession.sendIm(session.createIm(parse(str,chatter), null));
+//				parse(str,chatter);
 		} catch (Exception ex) {
 			System.out.println(new Date() + "\tCaught in AIMMessageListener.OnImReceived");
 			ex.printStackTrace();

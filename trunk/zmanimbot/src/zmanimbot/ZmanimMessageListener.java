@@ -36,83 +36,54 @@ abstract class ZmanimMessageListener {
 	 * @param str the command
 	 * @param chatter the user who sent the command
 	 */
-	public void parse(String str, String chatter) {
+	public String parse(String str, String chatter) {
 		System.out.println(new SimpleDateFormat("[M/d/yy hh:mm:ss aaa]").format(new Date())+" "+chatter+": "+str);
     	String lowerCase = str.toLowerCase().trim();
     	
     	String param = (str.split(" ").length>1 ? str.substring(str.indexOf(" ")+1) : "" );
     	try {
     		if (isBlocked(chatter)) {
-    			ZmanimBot.sendMessage(chatter, blocked(param,chatter));
+    			return blocked(param,chatter);
     		}
 
 	    	else if (lowerCase.startsWith("help") || lowerCase.startsWith("?")) {
-	    		ZmanimBot.sendMessage(chatter, help(param));
+	    		return help(param);
 	    	}
 	    	
 	    	else if (lowerCase.startsWith("list")){
-	    		ZmanimBot.sendMessage(chatter, list(param));
+	    		return list(param);
 	    	}
 	    	
 	    	else if (lowerCase.startsWith("credits") || lowerCase.startsWith("about")) {
-	    		ZmanimBot.sendMessage(chatter, credits(param ));
+	    		return credits(param );
 	    	}
 	    	
 	    	else if(lowerCase.startsWith("comment") || lowerCase.startsWith("feedback")){
-	    		ZmanimBot.sendMessage(chatter, comment( param, chatter));
+	    		return comment( param, chatter);
 	    	}
 	    		    	
 	    	else if (lowerCase.startsWith("map")) {
-	    		ZmanimBot.sendMessage(chatter, map(param) );
+	    		return  map(param);
 	    	}
 	    	
 	    	else if (lowerCase.startsWith("zmanim")) {
-	    		ZmanimBot.sendMessage(chatter, zmanim(param));
+	    		return zmanim(param);
 	    	}
 	    	else if (lowerCase.startsWith("admin")) {
-	    		ZmanimBot.sendMessage(chatter, admin(param, chatter ));
+	    		return admin(param, chatter );
 	    	}
 	    	else if (lowerCase.startsWith("hello") || lowerCase.startsWith("hi") || lowerCase.startsWith("hey")) {
-	    		ZmanimBot.sendMessage(chatter, hello(param));
+	    		return  hello(param);
 	    	}
 	    	else { 
-	    		ZmanimBot.sendMessage(chatter, zmanim(str));
+	    		return zmanim(str);
 	    	}
-	    } catch (Exception ex) {System.out.println("Caught in ZmanimMessageListener.parse():");ex.printStackTrace();}
+	    } catch (Exception ex) {
+	    	System.out.println("Caught in ZmanimMessageListener.parse():");
+//	    	ex.printStackTrace();
+	    	return "Error!";
+	    }
     	
-    	
-/*        //reminder
-    	else if(lowerCase.startsWith("remind")){
-            //Add the current chatter to the reminder list
-            if(!ZmanimBot.m_reminderBots.keySet().contains(chatter))
-            {
-                System.out.println("Adding " + chatter + " to reminder list.");
-                m_reminderBots.put(chatter, new ReminderBot(chatter,gchat));
-            }
-            String[] arguments = lowerCase.split("-");
-             
-            String locationString = "";
-            String timeString = "";
-            for (String s : arguments)
-            {
-                if(s.startsWith("l"))
-                    locationString = s.substring(1).trim();
-                else if(s.startsWith("t"))
-                    timeString = s.substring(1).trim();
-            }
-            
-            GeoLocation g = ZmanimBot.getGeoLocation(locationString);
-            
-            ZmanimReminder zr = new ZmanimReminder(chatter, gchat);
-            zr.setTime(timeString, g);
-            m_reminderBots.get(chatter).addReminder(zr);
-            DateFormat df = DateFormat.getTimeInstance();
-            Date temp = zr.getNextTime();
-            System.out.println( "Reminder Set. Next Reminder at " + df.format(zr.getNextTime()));
-            return "Reminder Set. Next Reminder at " + df.format(zr.getNextTime());
-    	}
-  */  	
-
     }
     
     
@@ -148,9 +119,9 @@ abstract class ZmanimMessageListener {
 		String[] messages = {
 			"I'm sorry, but due to repeated abuse, "+chatter+" has been banned from using ZmanimBot.",
 			"The number you have reached has been disconnected or is no longer in service. Please check the number and dial again.",
-			"Zvi Rosen is evil.",
-			"No zmanim for you!",
-			"An important message for "+chatter+": Turn off your goyishe music and stop being mevatel Torah."
+//			"Zvi Rosen is evil.",
+//			"No zmanim for you!",
+//			"An important message for "+chatter+": Turn off your goyishe music and stop being mevatel Torah."
 		};
 		return messages[rand.nextInt(messages.length)];
 		
@@ -264,7 +235,7 @@ abstract class ZmanimMessageListener {
 	        }
 	        
 	    } catch (Exception ex) {
-	    	ex.printStackTrace();
+//	    	ex.printStackTrace();
 	    	return "Unknown command or location. Type \"help\" for a list of commands.";
 	    }
     	

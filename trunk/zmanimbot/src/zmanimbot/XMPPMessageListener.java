@@ -29,7 +29,12 @@ class XMPPMessageListener extends ZmanimMessageListener implements MessageListen
 		String str = message.getBody();
         if ((str!= null) && (message.getType()!=Message.Type.error)) {
 	    	String chatter = message.getFrom().split("/")[0];
-        	parse(str,chatter);
+        	try {
+	            chat.sendMessage(parse(str,chatter));
+            }
+            catch (XMPPException e) {
+	            e.printStackTrace();
+            }
         }
 	}
 

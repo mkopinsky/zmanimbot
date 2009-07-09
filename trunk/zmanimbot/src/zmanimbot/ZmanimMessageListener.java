@@ -19,6 +19,10 @@ abstract class ZmanimMessageListener {
 	String[] admins = {"mkopinsky@gmail.com","liron.kopinsky@gmail.com",/*"kop42986@aim.com"*/};
 	String[] blockedUsers = {"zroe102@gmail.com"};
 	ZmanimParser parser;
+	
+	protected void log(String s) {
+		System.out.println(s);
+	}
 
 
 	/**
@@ -37,7 +41,7 @@ abstract class ZmanimMessageListener {
 	 * @param chatter the user who sent the command
 	 */
 	public String parse(String str, String chatter) {
-		System.out.println(new SimpleDateFormat("[M/d/yy hh:mm:ss aaa]").format(new Date())+" "+chatter+": "+str);
+		log(new SimpleDateFormat("[M/d/yy hh:mm:ss aaa]").format(new Date())+" "+chatter+": "+str);
     	String lowerCase = str.toLowerCase().trim();
     	
     	String param = (str.split(" ").length>1 ? str.substring(str.indexOf(" ")+1) : "" );
@@ -79,7 +83,7 @@ abstract class ZmanimMessageListener {
 	    		return zmanim(str);
 	    	}
 	    } catch (Exception ex) {
-	    	System.out.println("Caught in ZmanimMessageListener.parse():");
+	    	log("Caught in ZmanimMessageListener.parse():");
 	    	ex.printStackTrace();
 	    	return "Error!";
 	    }
@@ -189,7 +193,7 @@ abstract class ZmanimMessageListener {
 	    		strArray[i]=strArray[i].trim();
 
 			GeoLocation loc = ZmanimBot.getGeoLocation(strArray[0].toUpperCase().trim());
-			System.out.println('{'+loc.getLocationName()+'}');
+			log('{'+loc.getLocationName()+'}');
 	        ZmanimCalendar cal = new ZmanimCalendar(loc);
 
 			DateFormat df = DateFormat.getTimeInstance();
@@ -266,7 +270,7 @@ abstract class ZmanimMessageListener {
 		else {
     		//Shutdown
     		if (str.startsWith("shutdown")) {
-    			System.out.println(new Date() + "\tShut down by "+chatter+"\n");
+    			log(new Date() + "\tShut down by "+chatter+"\n");
     			System.exit(0);
     			return "shutting down...";
     		}
@@ -312,11 +316,11 @@ abstract class ZmanimMessageListener {
     		else if (str.startsWith("message") || str.startsWith("send")) {
     			String dest = str.split(" ")[1];
     			String message = str.substring(dest.length()+9);
-    			System.out.println("Sending message to "+dest+":\t"+message);
+    			log("Sending message to "+dest+":\t"+message);
     			try {
     				ZmanimBot.sendMessage(dest,message);
     				return "Message sent.";
-    			} catch (Exception ex) {System.out.println("Trying to send admin message: "+ex);return "Sending failed.";}
+    			} catch (Exception ex) {log("Trying to send admin message: "+ex);return "Sending failed.";}
     		}
     		else if (str.startsWith("cycle")) {
     			String[] spl=str.split(" ");

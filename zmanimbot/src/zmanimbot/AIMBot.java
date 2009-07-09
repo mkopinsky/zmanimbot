@@ -10,15 +10,13 @@ public class AIMBot extends Bot {
 	AccSession session;
 	boolean running = true;
 	String key = "ZmanimBot (Key:zm15hQ3po7RrfGUH)";
-//	String username = "zmanimbot";
-//	String password = "kriasShma";
 	
 	
 	//Constructor
 	AIMBot(final String username, final String password) {
-		Thread th = new Thread( new Runnable() {
-			@Override
-			public void run() {
+//		Thread th = new Thread( new Runnable() {
+//			@Override
+//			public void run() {
 				try {
 //					System.out.println(new Date() + "\tCreating new AIMBot.");
 					// Create main session object
@@ -70,10 +68,10 @@ public class AIMBot extends Bot {
 					}
 			}
 
-		});
+//		});
 		
-		th.start();
-	}
+//		th.start();
+//	}
 	
 	/**
 	 * Send a message to a recipient.

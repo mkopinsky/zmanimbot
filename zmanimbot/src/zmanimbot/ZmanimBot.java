@@ -95,7 +95,8 @@ public class ZmanimBot {
     				bots.put(ls[1], new XMPPBot(ls[1],ls[2],ls[3]));
     			else if (ls[0].equalsIgnoreCase("twitter")) //for other non-protocol passwords
     			{
-    				twitterbot = new TwitterBot(ls[2], ls[3]);	
+    				;
+//    				twitterbot = new TwitterBot(ls[2], ls[3]);	
     			}
     			else
     				System.out.println("Invalid entry in passwords file. Line was: " + line);
@@ -302,7 +303,6 @@ public class ZmanimBot {
     	String suffix = chatter.split("@")[1];
 
     	if (m_bots.containsKey(suffix)) {
-    		System.out.println("Sending message with suffix "+suffix);
     		m_bots.get(suffix).send(chatter, message);
     	}
     	else if(suffix.contains("twitter"))

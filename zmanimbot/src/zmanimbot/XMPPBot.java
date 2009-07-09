@@ -37,8 +37,15 @@ class XMPPBot extends Bot {
 			connection = new XMPPConnection(server);
 			
 			System.out.println(new Date() + "\tLogging in to "+server);
+			System.out.print("Connected? "+connection.isConnected());
+			System.out.println(" Authenticated? "+connection.isAuthenticated());
 			connection.connect();
+			System.out.print("Connected? "+connection.isConnected());
+			System.out.println(" Authenticated? "+connection.isAuthenticated());
 			connection.login(username,password);
+			System.out.print("Connected? "+connection.isConnected());
+			System.out.println(" Authenticated? "+connection.isAuthenticated());
+			System.out.println(connection.getRoster().getEntries());
 	
 	        //Set presence
 	        presence = new Presence(Presence.Type.available, "Check out zmanimbot.blogspot.com. And tell your friends about ZmanimBot!",0,Presence.Mode.available);

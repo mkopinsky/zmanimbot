@@ -80,7 +80,7 @@ abstract class ZmanimMessageListener {
 	    	}
 	    } catch (Exception ex) {
 	    	System.out.println("Caught in ZmanimMessageListener.parse():");
-//	    	ex.printStackTrace();
+	    	ex.printStackTrace();
 	    	return "Error!";
 	    }
     	

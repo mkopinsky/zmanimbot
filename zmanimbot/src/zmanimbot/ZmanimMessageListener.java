@@ -316,7 +316,11 @@ abstract class ZmanimMessageListener {
     			ZmanimBot.setStatus ("available",awayMessage);
     			return "Available message set: "+awayMessage;
     		}
-    		
+    		else if(str.startsWith("twitter")) {
+    			String awayMessage = (str.length()>7 ? str.substring(8) : "");
+    			ZmanimBot.setStatus ("available",awayMessage, true);
+    			return "Twitter message set: "+awayMessage;
+    		}
     		else if (str.startsWith("reload table")) {
     			Hashtable<String,String> temp = new Hashtable<String,String>(parser.getNamesTable());
     			try {

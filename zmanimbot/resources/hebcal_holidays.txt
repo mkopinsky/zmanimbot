@@ -1,0 +1,230 @@
+1/6/2009 Asara B'Tevet
+1/26/2009 Rosh Chodesh Sh'vat
+2/9/2009 Tu B'Shvat
+2/21/2009 Shabbat Shekalim
+2/24/2009 Rosh Chodesh Adar
+2/25/2009 Rosh Chodesh Adar
+3/7/2009 Shabbat Zachor
+3/9/2009 Ta'anit Esther
+3/10/2009 Purim
+3/11/2009 Shushan Purim
+3/14/2009 Shabbat Parah
+3/21/2009 Shabbat HaChodesh
+3/26/2009 Rosh Chodesh Nisan
+4/4/2009 Shabbat HaGadol
+4/8/2009 Ta'anit Bechorot
+4/8/2009 Erev Pesach
+4/9/2009 Pesach I
+4/10/2009 Pesach II
+4/11/2009 Pesach III (CH''M)
+4/12/2009 Pesach IV (CH''M)
+4/13/2009 Pesach V (CH''M)
+4/14/2009 Pesach VI (CH''M)
+4/15/2009 Pesach VII
+4/16/2009 Pesach VIII
+4/21/2009 Yom HaShoah
+4/24/2009 Rosh Chodesh Iyyar
+4/25/2009 Rosh Chodesh Iyyar
+4/28/2009 Yom HaZikaron
+4/29/2009 Yom HaAtzma'ut
+5/12/2009 Lag B'Omer
+5/22/2009 Yom Yerushalayim
+5/24/2009 Rosh Chodesh Sivan
+5/28/2009 Erev Shavuot
+5/29/2009 Shavuot I
+5/30/2009 Shavuot II
+6/22/2009 Rosh Chodesh Tamuz
+6/23/2009 Rosh Chodesh Tamuz
+7/9/2009 Tzom Tammuz
+7/22/2009 Rosh Chodesh Av
+7/25/2009 Shabbat Hazon
+7/30/2009 Tish'a B'Av
+8/1/2009 Shabbat Nachamu
+8/20/2009 Rosh Chodesh Elul
+8/21/2009 Rosh Chodesh Elul
+9/18/2009 Erev Rosh Hashana
+9/19/2009 Rosh Hashana 5770
+9/20/2009 Rosh Hashana II
+9/21/2009 Tzom Gedaliah
+9/26/2009 Shabbat Shuva
+9/27/2009 Erev Yom Kippur
+9/28/2009 Yom Kippur
+10/2/2009 Erev Sukkot
+10/3/2009 Sukkot I
+10/4/2009 Sukkot II
+10/5/2009 Sukkot III (CH''M)
+10/6/2009 Sukkot IV (CH''M)
+10/7/2009 Sukkot V (CH''M)
+10/8/2009 Sukkot VI (CH''M)
+10/9/2009 Sukkot VII (Hoshana Raba)
+10/10/2009 Shmini Atzeret
+10/11/2009 Simchat Torah
+10/18/2009 Rosh Chodesh Cheshvan
+10/19/2009 Rosh Chodesh Cheshvan
+11/17/2009 Rosh Chodesh Kislev
+11/18/2009 Rosh Chodesh Kislev
+12/11/2009 Chanukah: 1 Candle
+12/12/2009 Chanukah: 2 Candles
+12/13/2009 Chanukah: 3 Candles
+12/14/2009 Chanukah: 4 Candles
+12/15/2009 Chanukah: 5 Candles
+12/16/2009 Chanukah: 6 Candles
+12/17/2009 Rosh Chodesh Tevet
+12/17/2009 Chanukah: 7 Candles
+12/18/2009 Rosh Chodesh Tevet
+12/18/2009 Chanukah: 8 Candles
+12/19/2009 Chanukah: 8th Day
+12/27/2009 Asara B'Tevet
+1/16/2010 Rosh Chodesh Sh'vat
+1/30/2010 Tu B'Shvat
+2/13/2010 Shabbat Shekalim
+2/14/2010 Rosh Chodesh Adar
+2/15/2010 Rosh Chodesh Adar
+2/25/2010 Ta'anit Esther
+2/27/2010 Shabbat Zachor
+2/28/2010 Purim
+3/1/2010 Shushan Purim
+3/6/2010 Shabbat Parah
+3/13/2010 Shabbat HaChodesh
+3/16/2010 Rosh Chodesh Nisan
+3/27/2010 Shabbat HaGadol
+3/29/2010 Ta'anit Bechorot
+3/29/2010 Erev Pesach
+3/30/2010 Pesach I
+3/31/2010 Pesach II
+4/1/2010 Pesach III (CH''M)
+4/2/2010 Pesach IV (CH''M)
+4/3/2010 Pesach V (CH''M)
+4/4/2010 Pesach VI (CH''M)
+4/5/2010 Pesach VII
+4/6/2010 Pesach VIII
+4/11/2010 Yom HaShoah
+4/14/2010 Rosh Chodesh Iyyar
+4/15/2010 Rosh Chodesh Iyyar
+4/18/2010 Yom HaZikaron
+4/19/2010 Yom HaAtzma'ut
+5/2/2010 Lag B'Omer
+5/12/2010 Yom Yerushalayim
+5/14/2010 Rosh Chodesh Sivan
+5/18/2010 Erev Shavuot
+5/19/2010 Shavuot I
+5/20/2010 Shavuot II
+6/12/2010 Rosh Chodesh Tamuz
+6/13/2010 Rosh Chodesh Tamuz
+6/29/2010 Tzom Tammuz
+7/12/2010 Rosh Chodesh Av
+7/17/2010 Shabbat Hazon
+7/20/2010 Tish'a B'Av
+7/24/2010 Shabbat Nachamu
+8/10/2010 Rosh Chodesh Elul
+8/11/2010 Rosh Chodesh Elul
+9/8/2010 Erev Rosh Hashana
+9/9/2010 Rosh Hashana 5771
+9/10/2010 Rosh Hashana II
+9/11/2010 Shabbat Shuva
+9/12/2010 Tzom Gedaliah
+9/17/2010 Erev Yom Kippur
+9/18/2010 Yom Kippur
+9/22/2010 Erev Sukkot
+9/23/2010 Sukkot I
+9/24/2010 Sukkot II
+9/25/2010 Sukkot III (CH''M)
+9/26/2010 Sukkot IV (CH''M)
+9/27/2010 Sukkot V (CH''M)
+9/28/2010 Sukkot VI (CH''M)
+9/29/2010 Sukkot VII (Hoshana Raba)
+9/30/2010 Shmini Atzeret
+10/1/2010 Simchat Torah
+10/8/2010 Rosh Chodesh Cheshvan
+10/9/2010 Rosh Chodesh Cheshvan
+11/7/2010 Rosh Chodesh Kislev
+11/8/2010 Rosh Chodesh Kislev
+12/1/2010 Chanukah: 1 Candle
+12/2/2010 Chanukah: 2 Candles
+12/3/2010 Chanukah: 3 Candles
+12/4/2010 Chanukah: 4 Candles
+12/5/2010 Chanukah: 5 Candles
+12/6/2010 Chanukah: 6 Candles
+12/7/2010 Rosh Chodesh Tevet
+12/7/2010 Chanukah: 7 Candles
+12/8/2010 Rosh Chodesh Tevet
+12/8/2010 Chanukah: 8 Candles
+12/9/2010 Chanukah: 8th Day
+12/16/2010 Asara B'Tevet
+1/6/2011 Rosh Chodesh Sh'vat
+1/20/2011 Tu B'Shvat
+2/4/2011 Rosh Chodesh Adar I
+2/5/2011 Rosh Chodesh Adar I
+2/18/2011 Purim Katan
+3/5/2011 Shabbat Shekalim
+3/6/2011 Rosh Chodesh Adar II
+3/7/2011 Rosh Chodesh Adar II
+3/17/2011 Ta'anit Esther
+3/19/2011 Shabbat Zachor
+3/20/2011 Purim
+3/21/2011 Shushan Purim
+3/26/2011 Shabbat Parah
+4/2/2011 Shabbat HaChodesh
+4/5/2011 Rosh Chodesh Nisan
+4/16/2011 Shabbat HaGadol
+4/18/2011 Ta'anit Bechorot
+4/18/2011 Erev Pesach
+4/19/2011 Pesach I
+4/20/2011 Pesach II
+4/21/2011 Pesach III (CH''M)
+4/22/2011 Pesach IV (CH''M)
+4/23/2011 Pesach V (CH''M)
+4/24/2011 Pesach VI (CH''M)
+4/25/2011 Pesach VII
+4/26/2011 Pesach VIII
+5/1/2011 Yom HaShoah
+5/4/2011 Rosh Chodesh Iyyar
+5/5/2011 Rosh Chodesh Iyyar
+5/8/2011 Yom HaZikaron
+5/9/2011 Yom HaAtzma'ut
+5/22/2011 Lag B'Omer
+6/1/2011 Yom Yerushalayim
+6/3/2011 Rosh Chodesh Sivan
+6/7/2011 Erev Shavuot
+6/8/2011 Shavuot I
+6/9/2011 Shavuot II
+7/2/2011 Rosh Chodesh Tamuz
+7/3/2011 Rosh Chodesh Tamuz
+7/19/2011 Tzom Tammuz
+8/1/2011 Rosh Chodesh Av
+8/6/2011 Shabbat Hazon
+8/9/2011 Tish'a B'Av
+8/13/2011 Shabbat Nachamu
+8/30/2011 Rosh Chodesh Elul
+8/31/2011 Rosh Chodesh Elul
+9/28/2011 Erev Rosh Hashana
+9/29/2011 Rosh Hashana 5772
+9/30/2011 Rosh Hashana II
+10/1/2011 Shabbat Shuva
+10/2/2011 Tzom Gedaliah
+10/7/2011 Erev Yom Kippur
+10/8/2011 Yom Kippur
+10/12/2011 Erev Sukkot
+10/13/2011 Sukkot I
+10/14/2011 Sukkot II
+10/15/2011 Sukkot III (CH''M)
+10/16/2011 Sukkot IV (CH''M)
+10/17/2011 Sukkot V (CH''M)
+10/18/2011 Sukkot VI (CH''M)
+10/19/2011 Sukkot VII (Hoshana Raba)
+10/20/2011 Shmini Atzeret
+10/21/2011 Simchat Torah
+10/28/2011 Rosh Chodesh Cheshvan
+10/29/2011 Rosh Chodesh Cheshvan
+11/27/2011 Rosh Chodesh Kislev
+12/20/2011 Chanukah: 1 Candle
+12/21/2011 Chanukah: 2 Candles
+12/22/2011 Chanukah: 3 Candles
+12/23/2011 Chanukah: 4 Candles
+12/24/2011 Chanukah: 5 Candles
+12/25/2011 Chanukah: 6 Candles
+12/26/2011 Rosh Chodesh Tevet
+12/26/2011 Chanukah: 7 Candles
+12/27/2011 Rosh Chodesh Tevet
+12/27/2011 Chanukah: 8 Candles
+12/28/2011 Chanukah: 8th Day

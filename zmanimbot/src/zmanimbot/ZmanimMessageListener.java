@@ -79,6 +79,9 @@ abstract class ZmanimMessageListener {
 	    	else if (lowerCase.startsWith("hello") || lowerCase.startsWith("hi") || lowerCase.startsWith("hey")) {
 	    		return  hello(param);
 	    	}
+	    	else if (lowerCase.startsWith("location")) {
+	    		return location(param);
+	    	}
 	    	else { 
 	    		return zmanim(str);
 	    	}
@@ -108,7 +111,8 @@ abstract class ZmanimMessageListener {
 		"Example: new york: hanetz: tomorrow\n"+
 		"To see a list of available zmanim, type \"list\".\n"+
 		"To see a map of a location with bearing to Yerushalayim, type \"map\" and the location.\n"+
-		"To leave a comment/bug report for us, type \"comment\" and then your comment.";
+		"To leave a comment/bug report for us, type \"comment\" and then your comment."+
+		"To get information about a particular location, type \"location\" and then the location.";
             /*"remind -l <location> -t <halachic time name [minutes before time]>\n"+
             "\tlocation can be any location recognized by Google Maps\n"+
             "\ttime can be any of the halachic times returned by zmanim\n"+
@@ -173,6 +177,32 @@ abstract class ZmanimMessageListener {
 	    }
     }
     
+    String location (String str) {
+    	if (str.equals("")) {
+    		return "You must provide a location...";
+    	}
+		try {
+			GeoLocation loc = ZmanimBot.getGeoLocation(str);
+
+			StringBuilder sb = new StringBuilder();
+			sb.append("Location:\t").append(loc.getLocationName());
+			sb.append("\nLatitude:\t").append(loc.getLatitude()).append("°");
+			sb.append("\nLongitude:\t").append(loc.getLongitude()).append("°");
+//			sb.append("\nTimezone Name:\t").append(loc.getTimeZone().getID());
+			sb.append("\nTimezone:\t").append(loc.getTimeZone().getDisplayName());
+			sb.append("\n(GMT ").append((loc.getTimeZone().getRawOffset()>0?"+":"")).
+				append(loc.getTimeZone().getRawOffset() / (1000*60*60));
+			if (loc.getTimeZone().getDSTSavings()!=0)
+				sb.append(", +").append(loc.getTimeZone().getDSTSavings() / (1000*60*60)).append(" hour for DST when applicable");
+			sb.append(")");
+
+			return sb.toString();
+		}
+		catch (Exception ex) {
+			return "Invalid location.";
+		}
+    }
+
     String map (String str) {
     	if (str.equals("")) {
     		return "You must provide a location...";

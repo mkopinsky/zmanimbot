@@ -12,6 +12,7 @@ public class ZmanimConsole extends ZmanimMessageListener {
 	
 	public ZmanimConsole () {
 		parser = new ZmanimParser();
+		hp = new HebcalProvider();
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String line="";
 		while (true) {

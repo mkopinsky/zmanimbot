@@ -48,18 +48,21 @@ public class ZmanimBot {
 	static final String GoogleMapsAPIKey = "ABQIAAAA5FyU4V9CG_Ib25k4CSzLSRRcyQuJXIrjqIosfS0WHLeFIsXZ9hR_mXYe8-G2pa7Bn-NfZpplWQ6qig";
 	private static Map<String,Bot> m_bots;
     
-	static Bot gchatbot;
-	static Bot aimbot;
+//	static Bot gchatbot;
+//	static Bot aimbot;
 	static Bot twitterbot;
     private static ZmanimParser parser;
 	public static ZmanimParser getZmanimParser() { return parser; }
     
+	private static HebcalProvider hp;
+	public static HebcalProvider getHebcalProvider() { return hp; }
 						
     ////////////////////////////////////////////////////
     //Main method
     public static void main(String[] args) {
         System.out.println(new Date()+"\tStarting ZmanimBot...");
         parser = new ZmanimParser();
+        hp = new HebcalProvider();
         readLocationsFile("resources/IL1.txt");
         m_bots = InitializeBots("passwords.txt");
 

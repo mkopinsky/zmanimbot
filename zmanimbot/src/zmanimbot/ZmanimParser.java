@@ -199,18 +199,31 @@ public class ZmanimParser {
 	
 	
     public Date parseDate(String str) {
+		Date d;
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date today;
+        try {
+        	/*
+        	 *When we only need to parse or display dates, the time doesn't make a difference.
+        	 *But when we need to look up things in a hashmap based on them (such as in 
+        	 *HebcalProvider, we need the dates to have no time. The following is a hack to 
+        	 *get that to work.
+        	 */
+	        today = sdf.parse(sdf.format(new Date()));
+        }
+        catch (ParseException e) {
+        	today = new Date();
+        }
 		if (str.equalsIgnoreCase("today")) {
-			return new Date();
+			return today;
 		}
 		else if (str.equalsIgnoreCase("tomorrow")) {
-			return new Date(new Date().getTime() + 24*60*60*1000);
+			return new Date(today.getTime() + 24*60*60*1000);
 		}
 		else if (str.equalsIgnoreCase("yesterday")) {
-			return new Date(new Date().getTime() - 24*60*60*1000);
+			return new Date(today.getTime() - 24*60*60*1000);
 		}
 			 
-		Date d;
-		SimpleDateFormat sdf;
 		try {
 			sdf = new SimpleDateFormat("MM-dd-yy");
 			d =  sdf.parse(str);

@@ -19,6 +19,7 @@ abstract class ZmanimMessageListener {
 	String[] admins = {"mkopinsky@gmail.com","liron.kopinsky@gmail.com",/*"kop42986@aim.com"*/};
 	String[] blockedUsers = {"zroe102@gmail.com"};
 	ZmanimParser parser;
+	HebcalProvider hp;
 	
 	protected void log(String s) {
 		System.out.println(s);
@@ -31,6 +32,7 @@ abstract class ZmanimMessageListener {
 	 */
 	public ZmanimMessageListener() {
 		parser = ZmanimBot.getZmanimParser();
+		hp = ZmanimBot.getHebcalProvider();
 	} 
 	
 
@@ -82,6 +84,15 @@ abstract class ZmanimMessageListener {
 	    	else if (lowerCase.startsWith("location")) {
 	    		return location(param);
 	    	}
+	    	else if (lowerCase.startsWith("parsha") || lowerCase.startsWith("parasha")) {
+	    		return parsha(param);
+	    	}
+	    	else if (lowerCase.startsWith("omer") || lowerCase.startsWith("sefira")) {
+	    		return omer(param);
+	    	}
+	    	else if (lowerCase.startsWith("date")) {
+	    		return hebrewdate(param);
+	    	}
 	    	else { 
 	    		return zmanim(str);
 	    	}
@@ -127,9 +138,7 @@ abstract class ZmanimMessageListener {
 		String[] messages = {
 			"I'm sorry, but due to repeated abuse, "+chatter+" has been banned from using ZmanimBot.",
 			"The number you have reached has been disconnected or is no longer in service. Please check the number and dial again.",
-//			"Zvi Rosen is evil.",
 //			"No zmanim for you!",
-//			"An important message for "+chatter+": Turn off your goyishe music and stop being mevatel Torah."
 		};
 		return messages[rand.nextInt(messages.length)];
 		
@@ -264,20 +273,22 @@ abstract class ZmanimMessageListener {
 	        
 	        switch (strArray.length) {
 	        	case 1: {
+	        		d = parser.parseDate("today");
 	        		return  "Zmanim for " + loc.getLocationName() + "\n" +
-	                	sdf.format(new Date()) + 
+	                	sdf.format(d) + holidays(d) + 
 	                	parser.getZmanimString(cal);
 	        	}
 	        	
 	        	case 2: {
 		        	if ((d = parser.parseDate(strArray[1]))!=null) { //"new york:tomorrow"
 				        return  "Zmanim for " + loc.getLocationName() + "\n" +
-				                sdf.format(d) +
+				                sdf.format(d) + holidays(d) + 
 				                parser.getZmanimString(cal,d);
 			        }
 			        else { 									//"new york:shema"
+			        	d = parser.parseDate("today");
 				        return  "Zmanim for " + loc.getLocationName() + "\n" +
-				                sdf.format(new Date()) + 
+				                sdf.format(d) + holidays(d) + 
 				                parser.getZmanimString(strArray[1],cal);
 			        }
 	        	}
@@ -286,12 +297,12 @@ abstract class ZmanimMessageListener {
 	        	default: {
 		        	if ((d = parser.parseDate(strArray[1]))!=null) { //"new york:tomorrow:shema"
 				        return  "Zmanim for " + loc.getLocationName() + "\n" +
-				                sdf.format(d) + 
+				                sdf.format(d) + holidays(d) +  
 				                parser.getZmanimString(strArray[2],cal,d);
 			        }
 		        	else if ((d = parser.parseDate(strArray[2]))!=null) { //"new york:shema:tomorrow"
 				        return  "Zmanim for " + loc.getLocationName() + "\n" +
-				                sdf.format(d) + 
+				                sdf.format(d) + holidays(d) + 
 				                parser.getZmanimString(strArray[1],cal,d);
 			        	} 
 			        else return "Invalid syntax. See zmanimbot.blogspot.com for more details.";
@@ -305,6 +316,64 @@ abstract class ZmanimMessageListener {
     	
     }
     
+    /**
+     * 
+     * Find the parsha for a given date, or get today's parsha if no valid date is given
+     * 
+     * @param param string to check for date
+     * @return
+     */
+    String parsha(String param) {
+    	Date d = parser.parseDate(param.trim());
+    	if (d==null)
+    		d=parser.parseDate("today");
+    	String parsha = hp.getParsha(d);
+    	if (parsha ==null)
+    		return "No parsha could be found for that date. Sorry!";
+    	else
+    		return (new SimpleDateFormat("MMMMM dd, yyyy").format(d) + "\n" + parsha);
+    }
+
+    /**
+     * 
+     * Find the omer count for a given date, or get today's omer if no valid date is given
+     * 
+     * @param param string to check for date
+     * @return
+     */
+    String omer(String param) {
+    	Date d = parser.parseDate(param.trim());
+    	if (d==null)
+    		d=parser.parseDate("today");
+    	String omer = hp.getOmer(d);
+    	if (omer==null)
+    		return "No omer could be found for that date. Sorry!";
+    	else
+    		return (new SimpleDateFormat("MMMMM dd, yyyy").format(d) + "\n" + omer);
+    }
+
+    /**
+     * 
+     * Find the hebrew date for a given date, or get today's date if no valid date is given
+     * 
+     * @param param string to check for date
+     * @return
+     */
+    String hebrewdate(String param) {
+    	Date d = parser.parseDate(param.trim());
+    	if (d==null)
+    		d=parser.parseDate("today");
+    	String hebrewdate = hp.getHebrewDate(d);
+    	if (hebrewdate==null)
+    		return "No Hebrew date could be found for that date. Sorry!";
+    	else
+    		return (new SimpleDateFormat("MMMMM dd, yyyy").format(d) + "\n" + hebrewdate + holidays(d));
+    }
+    
+    String holidays (Date d) {
+    	String holiday = hp.getHolidays(d);
+    	return (holiday == null ? "" : "\n"+holiday);
+    }
 
     /**
      * 

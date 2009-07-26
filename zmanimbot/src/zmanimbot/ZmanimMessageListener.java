@@ -164,7 +164,14 @@ abstract class ZmanimMessageListener {
 				"The Gmail/Google Talk communication is based on Smack API, available at http://www.igniterealtime.org/projects/smack/index.jsp.";
     	
     }
-    
+    /**
+     * 
+     * Allow a user to send a comment/feedback message to bot admins.
+     * 
+     * @param str The message to send
+     * @param from The name of the user sending the feedback 
+     * @return success/failure message
+     */
     String comment (String str, String from) {
     	if (str.trim().equals("")) return "You must include a comment.";
     	else try {
@@ -176,7 +183,15 @@ abstract class ZmanimMessageListener {
 	    	return "There was an error.";
 	    }
     }
-    
+
+    /**
+     * 
+     * Provide information on a given location (as with all requests, location info
+     * is either fetched from google maps/geonames, or gotten from the local cache)
+     * 
+     * @param str The location to look up
+     * @return Formatted string to return to the user
+     */
     String location (String str) {
     	if (str.equals("")) {
     		return "You must provide a location...";
@@ -203,6 +218,14 @@ abstract class ZmanimMessageListener {
 		}
     }
 
+    /**
+     * 
+     * Provide users with a link to kosherjava's map applet showing location, zmanim,
+     * and a line showing the direction to Jerusalem. 
+     * 
+     * @param str
+     * @return
+     */
     String map (String str) {
     	if (str.equals("")) {
     		return "You must provide a location...";
@@ -216,6 +239,13 @@ abstract class ZmanimMessageListener {
 		}
     }
     
+    /**
+     * 
+     * Provide a user with zmanim for a requested location/date/list of zmanim
+     * 
+     * @param str The string to parse for the details of the request
+     * @return A string including all the requested info
+     */
     String zmanim(String str) {
 	    try {
 	    	String[] strArray = str.split("[:;|]");
@@ -275,7 +305,14 @@ abstract class ZmanimMessageListener {
     	
     }
     
-    
+
+    /**
+     * 
+     * Check if a user is an admin, to allow him to use admin commands.
+     * 
+     * @param chatter Username to check
+     * @return true if admin, false otherwise
+     */
     boolean isAdmin(String chatter) {
 		boolean authorized = false;
 		for (String admin:admins)
@@ -283,7 +320,14 @@ abstract class ZmanimMessageListener {
 				authorized = true;
 		return authorized;
     }
-    
+
+    /**
+     * 
+     * Check if a user has been blocked from using ZmanimBot.
+     * 
+     * @param chatter username to check
+     * @return true if blocked, false otherwise
+     */
     boolean isBlocked(String chatter) {
     	boolean blocked = false;
     	for (String user:blockedUsers)
@@ -292,6 +336,14 @@ abstract class ZmanimMessageListener {
     	return blocked;
     }
     
+    /**
+     * 
+     * Perform admin commands
+     * 
+     * @param str
+     * @param chatter
+     * @return
+     */
     String admin( String str, String chatter) {
 		//Check that user is authorized
 		if (!isAdmin(chatter))
@@ -304,28 +356,48 @@ abstract class ZmanimMessageListener {
     			System.exit(0);
     			return "shutting down...";
     		}
-    		
+
+    		/*
+    		 * Clear the location table of any entries. This forces ZmanimBot to redownload
+    		 * location info, in case it has bad information due to network issues or the like. 
+    		 */
     		else if (str.startsWith("clear cache")) {
     			ZmanimBot.clearCache();
     			return "locationTable successfully cleared.";
     		}
-    		
+
+    		/*
+    		 * Set an away message. (This is usually only used during debugging or the like.)
+    		 */
     		else if (str.startsWith("away")) {
     			String awayMessage = (str.length()>4 ? str.substring(5) : "");
     			ZmanimBot.setStatus ("away",awayMessage);
     			return "Away message set: "+awayMessage;
     		}
 
+    		/*
+    		 * Set an available message (similar to away message, but bot appears as "available"
+    		 * instead of "away" 
+    		 */
     		else if (str.startsWith("available")) {
     			String awayMessage = (str.length()>9 ? str.substring(10) : "");
     			ZmanimBot.setStatus ("available",awayMessage);
     			return "Available message set: "+awayMessage;
     		}
+    		
+    		/*
+    		 * Set an available message, and send it to twitter as well
+    		 */
     		else if(str.startsWith("twitter")) {
     			String awayMessage = (str.length()>7 ? str.substring(8) : "");
-    			ZmanimBot.setStatus ("available",awayMessage, true);
+    			ZmanimBot.setStatus ("available",awayMessage, true); //Putting true here sets twitter as well
     			return "Twitter message set: "+awayMessage;
     		}
+    		
+    		/*
+    		 * Reload the zmanim names table used by ZmanimParser. (This is used if you made changes
+    		 * locally and want them to reflect to the bot.)
+    		 */
     		else if (str.startsWith("reload table")) {
     			Hashtable<String,String> temp = new Hashtable<String,String>(parser.getNamesTable());
     			try {
@@ -337,12 +409,19 @@ abstract class ZmanimMessageListener {
     			}
     		}
     		
+    		/*
+    		 * Set the default zmanim list (when users use the "zmanim" command without further specifying
+    		 * which zmanim they want)
+    		 */
     		else if (str.startsWith("set list")) {
     			String list = (str.length()>9? str.substring(9):"alos hashachar, sunrise, shema gra, tefilla gra, chatzos, mincha gedola, sunset, tzeis");
     			parser.setStandardList(list);
     			return "Standard Zmanim List set to: "+list;    			
     		}
-    				
+
+    		/*
+    		 * Send a message to a particular user.
+    		 */
     		else if (str.startsWith("message") || str.startsWith("send")) {
     			String dest = str.split(" ")[1];
     			String message = str.substring(dest.length()+9);
@@ -352,6 +431,11 @@ abstract class ZmanimMessageListener {
     				return "Message sent.";
     			} catch (Exception ex) {log("Trying to send admin message: "+ex);return "Sending failed.";}
     		}
+    		
+    		/*
+    		 * Cause all XMPP Bots to disconnect and reconnect from their servers. You can 
+    		 * specify a wait time (in seconds) for each bot to wait before they reconnect.
+    		 */
     		else if (str.startsWith("cycle")) {
     			String[] spl=str.split(" ");
     			long wait;
@@ -364,9 +448,6 @@ abstract class ZmanimMessageListener {
 				} else {
 					wait = 0;
 				}
-					
-    					
-    					
     			ZmanimBot.cycleXMPPs(wait);
     			return "XMPP Bots were cycled.";
     		}

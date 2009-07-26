@@ -347,7 +347,15 @@ public class ZmanimBot {
     public static void clearCache() {
     	locationTable.clear();
     }
-    
+
+
+    /**
+     * 
+	 * Cause all XMPP Bots to disconnect and reconnect from their servers. You can 
+	 * specify a wait time (in seconds) for each bot to wait before they reconnect.
+     * 
+     * @param wait number of seconds to wait
+     */
     public static void cycleXMPPs(long wait) {
     	for (Bot b : m_bots.values())
     		if (b instanceof XMPPBot)

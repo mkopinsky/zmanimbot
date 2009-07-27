@@ -1,6 +1,8 @@
 package zmanimbot;
 
 import java.io.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 /**
  * Command line application that parses user input according to normal methods, but
@@ -12,6 +14,7 @@ public class ZmanimCommandLine extends ZmanimMessageListener {
 	
 	public ZmanimCommandLine (String s) {
 		parser = new ZmanimParser();
+		hp = new HebcalProvider();
         System.out.println(parse(s,"Command Line"));
 	}
 	
@@ -32,7 +35,12 @@ public class ZmanimCommandLine extends ZmanimMessageListener {
 			str+=s+" ";
 		if (str.trim().length()==0)
 			str = "hi";
-		ZmanimCommandLine zcl = new ZmanimCommandLine(str);
+		try {
+	        ZmanimCommandLine zcl = new ZmanimCommandLine(URLDecoder.decode(str, "UTF-8"));
+        }
+        catch (UnsupportedEncodingException e) {
+        	System.out.println("Any error occured! Please report this to the ZmanimBot team.");
+        }
 	}
 	
 }

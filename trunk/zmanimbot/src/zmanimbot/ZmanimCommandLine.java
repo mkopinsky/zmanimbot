@@ -30,6 +30,8 @@ public class ZmanimCommandLine extends ZmanimMessageListener {
 		String str="";
 		for (String s:args)
 			str+=s+" ";
+		if (str.trim().length()==0)
+			str = "hi";
 		ZmanimCommandLine zcl = new ZmanimCommandLine(str);
 	}
 	

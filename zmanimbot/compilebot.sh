@@ -8,6 +8,7 @@ CLASSPATH=$CLASSPATH:$ZBOT_HOME/lib/accjwrap.jar
 CLASSPATH=$CLASSPATH:$ZBOT_HOME/lib/zmanim-1.1.jar
 CLASSPATH=$CLASSPATH:$ZBOT_HOME/lib/smack.jar
 CLASSPATH=$CLASSPATH:$ZBOT_HOME/lib/smackx.jar
+CLASSPATH=$CLASSPATH:$ZBOT_HOME/lib/jtwitter.jar
 export CLASSPATH
 
 if [ ! -d $ZBOT_HOME/build ]; then
@@ -18,3 +19,4 @@ fi
 echo Compiling ZmanimBot....
 javac -cp "$CLASSPATH" -d "$ZBOT_HOME/build/" $ZBOT_HOME/src/zmanimbot/*.java
 echo Done.
+

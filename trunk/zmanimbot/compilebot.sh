@@ -18,5 +18,5 @@ fi
 
 echo Compiling ZmanimBot....
 javac -cp "$CLASSPATH" -d "$ZBOT_HOME/build/" $ZBOT_HOME/src/zmanimbot/*.java
-echo Done.
+echo Done. 
 

@@ -12,21 +12,26 @@ public class ZmanimBotRobotServlet extends AbstractRobotServlet  {
 
 	WaveBot bot = new WaveBot("resources/zman.txt");
 	String[] keywords = new String[]{ "zmanimbot","zbot" };
-	String openingMessage = "I'm Alive!\n" + 
+	String openingMessage = "Modeh Ani Lefanecha Melech Chai VeKayam!\n" + 
 							"To get zmanim, type 'zbot' and then any command zmanimbot understands.\n" +
 							"For a list of commands, type 'zbot help'.\n" +
+							"For more information about zmanimbot and how to zmanimbot on instant messanger,\n" +
+							"see http://zmanimbot.blogspot.com/\n" +
 							"Tizku l'Mitzvos!";
 
 	@Override
 	public void processEvents(RobotMessageBundle bundle) {
 		Wavelet wavelet = bundle.getWavelet();
-		
+
 		if (bundle.wasSelfAdded()) {
+			
 			Blip blip = wavelet.appendBlip();
 			TextView textView = blip.getDocument();
 			textView.append(openingMessage);
 
 			//TODO: Parse all messages in wavelet
+
+			//recursiveParse(wavelet.getRootBlip());
 		}
 		
 		for (Event e: bundle.getEvents()) {
@@ -34,7 +39,9 @@ public class ZmanimBotRobotServlet extends AbstractRobotServlet  {
 				e.getType() == EventType.BLIP_SUBMITTED) {
 				
 				Blip blip = e.getBlip();
-				processText(blip);
+				//processText(blip);
+				
+
 				/*Wavelet wavelet = bundle.getWavelet();
 				Blip root = wavelet.getRootBlip();
 				TextView textView = root.getDocument();
@@ -46,7 +53,20 @@ public class ZmanimBotRobotServlet extends AbstractRobotServlet  {
 				textView2.append(textView.getText());
 				processText(wavelet,textView2);
 				*/
+				
+
+				recursiveParse(blip);
 			}
+		}
+		
+	}
+	
+	private void recursiveParse(Blip blip)
+	{
+		processText(blip);
+		
+		for (Blip child : blip.getChildren()) {
+			recursiveParse(child);
 		}
 	}
 	
@@ -56,15 +76,25 @@ public class ZmanimBotRobotServlet extends AbstractRobotServlet  {
 		
 		//First loop over current level
 		for (Blip childBlip : children) {
-			if(childBlip.getCreator().contains("zmanim") && 
-				!childBlip.getDocument().getText().contains(openingMessage))
-				return childBlip;
+			if(childBlip == null || childBlip.getCreator() == null) continue;
+			
+			if(childBlip.getCreator().contains("zmanim"))
+			{
+				if(childBlip.getDocument() != null &&
+					!childBlip.getDocument().getText().contains(openingMessage))
+					return childBlip;
+			}
 		}
 		return null;
 	}
 
 	public void processText(Blip blip )
-	{
+	{			
+		if(blip == null || 
+				(blip.getCreator()!=null && 
+				blip.getCreator().contains("zmanim")))
+			return;
+		
 		Blip newBlip = null;
 		TextView newText = null;
 

@@ -1,0 +1,1 @@
+ZmanimBot is an instant messenger bot that connects to AIM and XMPP networks. It provides users with zmanim, or Jewish halachic times for prayer, calculated based on location and date. It uses the Zmanim API to calculate the times, Smack API to connect to XMPP networks, and the AIM SDK to connect to AIM.
